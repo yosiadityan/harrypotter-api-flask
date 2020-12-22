@@ -25,8 +25,8 @@ def get_hp_data(table_name):
 
 		params_dict = dict()
 		for param, val in params.items():
-			if param in col_name:
-				params_dict[param] = val
+			if param.title() in col_name:
+				params_dict[param.title()] = val
 
 		cond = db.and_(*(hp_data.c[col].ilike(f"%{params_dict.get(col, '')}%") for col in col_name))
 		query = db.select([*[hp_data.c[col] for col in col_name]]).where(cond)
@@ -35,7 +35,7 @@ def get_hp_data(table_name):
 			resultproxy = conn.execute(query).fetchall()
 		query_result = {idx: dict(row) for idx, row in enumerate(resultproxy)}
 
-		return ({'parameter' : {k:params_dict.get(k, 'None') for k in col_name},
+		return ({'parameter' : {k:params_dict.get(k, 'None').title() for k in col_name},
 				 'data' : query_result})
 
 @app.route('/getmsg/', methods=['GET'])
