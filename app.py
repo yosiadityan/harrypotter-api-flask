@@ -1,10 +1,14 @@
 # app.py
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Configure Flask app. For client encoding, check this : https://www.postgresql.org/docs/9.3/multibyte.html
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://atvtqynasseqsx:f41f3db470641fc322a99a4114aa31b3e4ab6db53d8c0e0db1abf2d822c45555@ec2-54-146-118-15.compute-1.amazonaws.com:5432/d9qbka0q4dqs9k?client_encoding=WIN1252"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JSON_SORT_KEYS'] = False
 
@@ -111,15 +115,3 @@ def get_potions_data():
 if __name__ == '__main__':
 	# Threaded option to enable multiple instances for multiple user access support
 	app.run(debug=True, threaded=True, port=5000)
-
-	# queries = db.session.execute("SELECT * FROM employee")
-	# result = [dict(row.items()) for row in queries]
-
-	# meta = db.MetaData()
-	# hp1 = db.Table('Harry Potter 1', meta, autoload=True, autoload_with=db.engine)
-	# print(db.session.query(hp1).first())
-
-	# meta.reflect(db.engine)
-	# print(meta.tables.keys())
-
-	# return jsonify({idx:val for idx, val in enumerate(result)})
