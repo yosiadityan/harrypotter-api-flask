@@ -110,7 +110,6 @@ def get_spells_data():
 def get_potions_data():
 	return get_hp_data('Potions')
 
-# -----------------------------------------------WHATS NEXT: PARAMETER IS CASE INSENSITIVE---------------------------------------------------
 
 if __name__ == '__main__':
 	# Threaded option to enable multiple instances for multiple user access support
