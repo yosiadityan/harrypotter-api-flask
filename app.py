@@ -42,71 +42,32 @@ def get_hp_data(table_name):
 		return ({'parameter' : {k:params_dict.get(k, 'None').title() for k in col_name},
 				 'data' : query_result})
 
-@app.route('/getmsg/', methods=['GET'])
-def respond():
-	# Retrieve the name from url parameter
-	name = request.args.get("name", None)
-
-	# For debugging
-	print(f"got name {name}")
-
-	response = {}
-
-	# Check if user sent a name at all
-	if not name:
-		response["ERROR"] = "no name found, please send a name."
-	# Check if the user entered a number not a name
-	elif str(name).isdigit():
-		response["ERROR"] = "name can't be numeric."
-	# Now the user entered a valid name
-	else:
-		response["MESSAGE"] = f"Welcome {name} to our awesome platform!!"
-
-	# Return the response in json format
-	return jsonify(response)
-
-@app.route('/post/', methods=['POST'])
-def post_something():
-	param = request.form.get('name')
-	print(param)
-	# You can add the test cases you made in the previous function, but in our case here you are just testing the POST functionality
-	if param:
-		return jsonify({
-			"Message": f"Welcome {name} to our awesome platform!!",
-			# Add this option to distinct the POST request
-			"METHOD" : "POST"
-		})
-	else:
-		return jsonify({
-			"ERROR": "no name found, please send a name."
-		})
-
 # A welcome message to test our server
 @app.route('/')
 def index():
 	return {'message' : 'OK', 'tables' : list(meta.tables.keys())}
 
 # Get Harry Potter 1 data
-@app.route('/hp1/', methods=['GET', 'POST'])
+@app.route('/hp1/', methods=['GET'])
 def get_hp1_data():
 	return get_hp_data('Harry Potter 1')
 
 # Get Harry Potter 2 data
-@app.route('/hp2/', methods=['GET', 'POST'])
+@app.route('/hp2/', methods=['GET'])
 def get_hp2_data():
 	return get_hp_data('Harry Potter 2')
 
 # Get Harry Potter 3 data
-@app.route('/hp3/', methods=['GET', 'POST'])
+@app.route('/hp3/', methods=['GET'])
 def get_hp3_data():
 	return get_hp_data('Harry Potter 3')
 
 # Get Potions data
-@app.route('/spells/', methods=['GET', 'POST'])
+@app.route('/spells/', methods=['GET'])
 def get_spells_data():
 	return get_hp_data('Spells')
 
-@app.route('/potions/', methods=['GET', 'POST'])
+@app.route('/potions/', methods=['GET'])
 def get_potions_data():
 	return get_hp_data('Potions')
 
